@@ -48,6 +48,18 @@ const PROJECTS: {
     github: "https://github.com/youseffahem1/Login-Modren-glass",
     demo: "https://login-modren-glass.vercel.app/",
   },
+  {
+    tag: "FULL-STACK SAAS PROJECT",
+    title: "Premium Student Management Dashboard",
+    description:
+      "A complete Full Stack Student Management System featuring an Apple-style glassmorphism UI, secure JWT authentication, and a robust FastAPI & PostgreSQL backend.",
+    stack: ["Next.js", "FastAPI", "PostgreSQL", "Glassmorphism"],
+    accent: "from-blue-500/20 to-indigo-500/10",
+    border: "border-blue-500/20",
+    glow: "group-hover:shadow-blue-500/20",
+    github: "https://github.com/youseffahem1/Frontend-backend",
+    demo: "https://frontend-backend-chi.vercel.app/",
+  },
 ];
 
 const STACK_ITEMS = [
