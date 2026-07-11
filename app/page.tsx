@@ -6,8 +6,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── DATA ────────────────────────────────────────────────────────────────────
-
 const NAV_LINKS = [
   { label: "Work", href: "#projects" },
   { label: "Stack", href: "#stack" },
@@ -38,6 +36,18 @@ const PROJECTS: {
     github: "https://github.com/youseffahem1/apple-liquid-login",
     demo: "https://apple-liquid-login-fa6q.vercel.app/",
   },
+  {
+    tag: "FRONT-END UI PROJECT",
+    title: "Modern Glass Login",
+    description:
+      "A sleek, modern glassmorphism login interface. Designed with beautiful gradients, smooth transitions, and a clean user experience.",
+    stack: ["React", "Glassmorphism", "UI/UX"],
+    accent: "from-purple-500/20 to-pink-500/10",
+    border: "border-purple-500/20",
+    glow: "group-hover:shadow-purple-500/20",
+    github: "https://github.com/youseffahem1/Login-Modren-glass",
+    demo: "https://login-modren-glass.vercel.app/",
+  },
 ];
 
 const STACK_ITEMS = [
@@ -64,8 +74,6 @@ const STACK_ITEMS = [
     items: ["Docker", "Nginx", "GitHub Actions", "Linux", "AWS / VPS"],
   },
 ];
-
-// ─── COMPONENTS ──────────────────────────────────────────────────────────────
 
 function Nav() {
   const navRef = useRef<HTMLElement>(null);
@@ -106,7 +114,6 @@ function Nav() {
       className="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/40 border-b border-purple-500/10"
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
         <a href="#" className="flex items-center gap-3 group">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
             <span className="text-white font-black text-sm tracking-tight">
@@ -118,7 +125,6 @@ function Nav() {
           </span>
         </a>
 
-        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((l) => (
             <a
@@ -137,7 +143,6 @@ function Nav() {
           </a>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden text-white/80 hover:text-white transition-colors p-2"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -169,7 +174,6 @@ function Nav() {
         </button>
       </div>
 
-      {/* Mobile Dropdown Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-[#0b0813]/95 backdrop-blur-xl border-b border-purple-500/10 p-6 flex flex-col gap-6 shadow-2xl">
           {NAV_LINKS.map((l) => (
@@ -705,6 +709,15 @@ function About() {
 }
 
 function Contact() {
+  const [copied, setCopied] = useState(false);
+
+  const handleContactClick = () => {
+    navigator.clipboard.writeText("youseffahem80@gmail.com");
+    setCopied(true);
+
+    setTimeout(() => setCopied(false), 3000);
+  };
+
   return (
     <section id="contact" className="relative py-20 md:py-32 bg-[#080610]">
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
@@ -728,29 +741,39 @@ function Contact() {
             Vision?
           </span>
         </h2>
+
         <p className="text-white/40 text-sm md:text-base font-light leading-relaxed mb-8 md:mb-10 max-w-xl mx-auto">
           I'm selectively available for high-impact projects, technical
           consulting, and long-term engineering partnerships. If you're building
-          something that matters — let's talk.
+          something that matters — let's talk at
+          <br />
+          <span className="text-white/90 font-medium tracking-wide mt-2 inline-block">
+            youseffahem80@gmail.com
+          </span>
         </p>
+
         <a
           href="mailto:youseffahem80@gmail.com"
+          onClick={handleContactClick}
           className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto px-10 py-4 rounded-full bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold tracking-widest uppercase text-xs md:text-sm shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.03] transition-all duration-300"
         >
-          <span>Initiate Contact</span>
-          <svg
-            className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
+          <span>{copied ? "Email Copied! ✅" : "Initiate Contact"}</span>
+
+          {!copied && (
+            <svg
+              className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          )}
         </a>
       </div>
     </section>
@@ -821,7 +844,10 @@ function Footer() {
                   label: "LinkedIn",
                   href: "https://www.linkedin.com/in/yousef-fahem-448528421/",
                 },
-                { label: "Email", href: "mailto:youseffahem80@gmail.com" },
+                {
+                  label: "Email",
+                  href: "mailto:youseffahem80@gmail.com",
+                },
               ].map((link) => (
                 <a
                   key={link.label}
@@ -855,8 +881,6 @@ function Footer() {
     </footer>
   );
 }
-
-// ─── ROOT PAGE ────────────────────────────────────────────────────────────────
 
 export default function Portfolio() {
   return (

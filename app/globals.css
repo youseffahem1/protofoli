@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Custom scrollbar ─────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -17,7 +16,6 @@
   background: rgba(167, 139, 250, 0.45);
 }
 
-/* ── Base resets ──────────────────────────────────────────────── */
 html {
   color-scheme: dark;
 }
@@ -26,44 +24,37 @@ html {
   box-sizing: border-box;
 }
 
-/* ── Selection highlight ──────────────────────────────────────── */
 ::selection {
   background: rgba(167, 139, 250, 0.25);
   color: #f0ebff;
 }
 
-/* ── Smooth transitions ───────────────────────────────────────── */
 .transition-all {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── GSAP will-change hints ───────────────────────────────────── */
 .word,
 .project-card,
 .stack-col {
   will-change: transform, opacity;
 }
 
-/* ── Perspective helper for 3D text ──────────────────────────── */
 .perspective-hero {
   perspective: 1200px;
   transform-style: preserve-3d;
 }
 
-/* ── Glass card base ──────────────────────────────────────────── */
 .glass {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
-/* ── Neon text glow utility ───────────────────────────────────── */
 .text-glow-purple {
   text-shadow: 0 0 20px rgba(167, 139, 250, 0.5),
                0 0 40px rgba(167, 139, 250, 0.2);
 }
 
-/* ── Reduced motion support ───────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
