@@ -734,7 +734,7 @@ function Contact() {
           something that matters — let's talk.
         </p>
         <a
-          href="mailto:yousef@architect.dev"
+          href="mailto:youseffahem80@gmail.com"
           className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto px-10 py-4 rounded-full bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold tracking-widest uppercase text-xs md:text-sm shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.03] transition-all duration-300"
         >
           <span>Initiate Contact</span>
@@ -821,7 +821,7 @@ function Footer() {
                   label: "LinkedIn",
                   href: "https://www.linkedin.com/in/yousef-fahem-448528421/",
                 },
-                { label: "Email", href: "mailto:yousef@architect.dev" },
+                { label: "Email", href: "mailto:youseffahem80@gmail.com" },
               ].map((link) => (
                 <a
                   key={link.label}
