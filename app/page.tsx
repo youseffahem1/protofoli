@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -14,7 +14,6 @@ const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
-
 
 const PROJECTS: {
   tag: string;
@@ -32,13 +31,7 @@ const PROJECTS: {
     title: "Apple Liquid Login",
     description:
       "A premium Apple-inspired liquid glass login interface built with Next.js, TypeScript, Tailwind CSS, and modern UI animations. Focused on smooth interactions, glassmorphism design, and high-end user experience.",
-    stack: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "GSAP",
-      "Glassmorphism",
-    ],
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Glassmorphism"],
     accent: "from-cyan-500/20 to-purple-500/10",
     border: "border-cyan-500/20",
     glow: "group-hover:shadow-cyan-500/20",
@@ -76,6 +69,7 @@ const STACK_ITEMS = [
 
 function Nav() {
   const navRef = useRef<HTMLElement>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const links = navRef.current?.querySelectorAll("a.nav-link");
@@ -109,7 +103,7 @@ function Nav() {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/20 border-b border-purple-500/10"
+      className="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/40 border-b border-purple-500/10"
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
@@ -119,13 +113,13 @@ function Nav() {
               YF
             </span>
           </div>
-          <span className="text-white/80 font-light tracking-[0.2em] text-xs uppercase">
+          <span className="text-white/80 font-light tracking-[0.2em] text-xs uppercase hidden sm:block">
             Yousef<span className="text-purple-400">.</span>dev
           </span>
         </a>
 
-        {/* Links */}
-        <div className="flex items-center gap-8">
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((l) => (
             <a
               key={l.label}
@@ -142,7 +136,61 @@ function Nav() {
             Hire Me
           </a>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-white/80 hover:text-white transition-colors p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle Menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            {isMobileMenuOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            )}
+          </svg>
+        </button>
       </div>
+
+      {/* Mobile Dropdown Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-16 left-0 w-full bg-[#0b0813]/95 backdrop-blur-xl border-b border-purple-500/10 p-6 flex flex-col gap-6 shadow-2xl">
+          {NAV_LINKS.map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-white/70 hover:text-purple-400 text-sm tracking-[0.2em] uppercase font-medium transition-colors"
+            >
+              {l.label}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="mt-2 text-center px-4 py-3 rounded-full border border-purple-500/40 text-purple-300 text-xs tracking-widest uppercase font-semibold hover:bg-purple-500/10 transition-all duration-300"
+          >
+            Hire Me
+          </a>
+        </div>
+      )}
     </nav>
   );
 }
@@ -158,14 +206,12 @@ function Hero() {
   useEffect(() => {
     const tl = gsap.timeline({ delay: 0.4 });
 
-    // Badge slides down
     tl.fromTo(
       badgeRef.current,
       { opacity: 0, y: -20 },
       { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
     );
 
-    // Line expands
     tl.fromTo(
       lineRef.current,
       { scaleX: 0, opacity: 0 },
@@ -173,7 +219,6 @@ function Hero() {
       "-=0.3",
     );
 
-    // Headline word stagger
     const words = headlineRef.current?.querySelectorAll(".word");
     if (words) {
       tl.fromTo(
@@ -191,7 +236,6 @@ function Hero() {
       );
     }
 
-    // Subtitle
     tl.fromTo(
       subRef.current,
       { opacity: 0, y: 30 },
@@ -199,7 +243,6 @@ function Hero() {
       "-=0.4",
     );
 
-    // CTAs
     tl.fromTo(
       ctaRef.current,
       { opacity: 0, y: 20 },
@@ -214,9 +257,8 @@ function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative h-screen w-full overflow-hidden flex items-center justify-center"
+      className="relative h-screen w-full overflow-hidden flex items-center justify-center pt-16 md:pt-0"
     >
-      {/* Background video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
         autoPlay
@@ -227,37 +269,31 @@ function Hero() {
         <source src="/portal.mp4" type="video/mp4" />
       </video>
 
-      {/* Dark overlay — ensures legibility over the neon portal */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-[#0b0813] z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/70 to-[#0b0813] z-10 pointer-events-none" />
 
-      {/* Radial ambient glow */}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-purple-600/10 blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full bg-purple-600/10 blur-[90px] md:blur-[120px]" />
       </div>
 
-      {/* Hero content */}
       <div className="relative z-20 max-w-5xl mx-auto px-6 text-center">
-        {/* Badge */}
         <div
           ref={badgeRef}
-          className="opacity-0 inline-flex items-center gap-2 mb-8"
+          className="opacity-0 inline-flex items-center gap-2 mb-6 md:mb-8"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/80 animate-pulse" />
-          <span className="text-emerald-400/80 text-xs tracking-[0.3em] uppercase font-medium">
+          <span className="text-emerald-400/80 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] uppercase font-medium">
             Available for Elite Projects
           </span>
         </div>
 
-        {/* Thin accent line */}
         <div
           ref={lineRef}
-          className="opacity-0 origin-left w-24 h-px bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto mb-8 shadow-sm shadow-purple-500/50"
+          className="opacity-0 origin-left w-16 md:w-24 h-px bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto mb-6 md:mb-8 shadow-sm shadow-purple-500/50"
         />
 
-        {/* Main headline */}
         <h1
           ref={headlineRef}
-          className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-6 perspective-[1200px]"
+          className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter leading-[1.1] md:leading-[0.9] mb-6 perspective-[1200px]"
           style={{ perspective: "1200px" }}
         >
           {words.map((word, i) => (
@@ -281,46 +317,45 @@ function Hero() {
           ))}
         </h1>
 
-        {/* Subtitle */}
         <p
           ref={subRef}
-          className="opacity-0 text-white/50 text-base md:text-lg font-light tracking-wide max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="opacity-0 text-white/50 text-sm md:text-lg font-light tracking-wide max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed"
         >
           Full-Stack Engineer & Web Architect — crafting performant, scalable
           systems with <span className="text-purple-400/90">Next.js</span>,{" "}
           <span className="text-cyan-400/90">FastAPI</span>, and{" "}
           <span className="text-violet-400/90">PostgreSQL</span>.
-          <br />
-          22 years old. Building the future, one architecture at a time.
+          <br className="hidden md:block" />
+          <span className="block mt-2 md:mt-0 md:inline">
+            22 years old. Building the future, one architecture at a time.
+          </span>
         </p>
 
-        {/* CTAs */}
         <div
           ref={ctaRef}
-          className="opacity-0 flex items-center justify-center gap-4 flex-wrap"
+          className="opacity-0 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <a
             href="#projects"
-            className="group relative px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-violet-600 text-white text-sm font-semibold tracking-widest uppercase shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.03] transition-all duration-300"
+            className="w-full sm:w-auto group relative px-8 py-3.5 md:py-3 rounded-full bg-gradient-to-r from-purple-600 to-violet-600 text-white text-sm font-semibold tracking-widest uppercase shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.03] transition-all duration-300"
           >
             <span className="relative z-10">View My Work</span>
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </a>
           <a
             href="#contact"
-            className="px-8 py-3 rounded-full border border-white/10 text-white/60 text-sm font-medium tracking-widest uppercase hover:border-purple-500/40 hover:text-white/90 hover:bg-white/5 transition-all duration-300"
+            className="w-full sm:w-auto px-8 py-3.5 md:py-3 rounded-full border border-white/10 text-white/60 text-sm font-medium tracking-widest uppercase hover:border-purple-500/40 hover:text-white/90 hover:bg-white/5 transition-all duration-300"
           >
             Contact Me
           </a>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-40">
+      <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-40 hidden sm:flex">
         <span className="text-white/50 text-[10px] tracking-[0.3em] uppercase">
           Scroll
         </span>
-        <div className="w-px h-12 bg-gradient-to-b from-purple-500/60 to-transparent animate-pulse" />
+        <div className="w-px h-8 md:h-12 bg-gradient-to-b from-purple-500/60 to-transparent animate-pulse" />
       </div>
     </section>
   );
@@ -332,7 +367,6 @@ function Projects() {
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Heading reveal
     gsap.fromTo(
       headingRef.current,
       { opacity: 0, y: 40 },
@@ -348,7 +382,6 @@ function Projects() {
       },
     );
 
-    // Cards staggered reveal
     const cards = cardsRef.current?.querySelectorAll(".project-card");
     if (cards) {
       gsap.fromTo(
@@ -374,21 +407,19 @@ function Projects() {
     <section
       ref={sectionRef}
       id="projects"
-      className="relative py-32 bg-[#0b0813]"
+      className="relative py-20 md:py-32 bg-[#0b0813]"
     >
-      {/* Ambient blobs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-32 left-1/4 w-96 h-96 bg-purple-600/8 rounded-full blur-[100px]" />
         <div className="absolute top-1/2 right-0 w-80 h-80 bg-cyan-600/8 rounded-full blur-[100px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Section heading */}
-        <div ref={headingRef} className="opacity-0 mb-20">
-          <p className="text-purple-400/70 text-xs tracking-[0.35em] uppercase font-medium mb-4">
+        <div ref={headingRef} className="opacity-0 mb-12 md:mb-20">
+          <p className="text-purple-400/70 text-[10px] md:text-xs tracking-[0.35em] uppercase font-medium mb-3 md:mb-4">
             Selected Work
           </p>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-white mb-4">
+          <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-white mb-4">
             Engineered{" "}
             <span
               style={{
@@ -401,13 +432,12 @@ function Projects() {
               with Precision
             </span>
           </h2>
-          <p className="text-white/40 text-base max-w-xl font-light leading-relaxed">
+          <p className="text-white/40 text-sm md:text-base max-w-xl font-light leading-relaxed">
             Each build is a deliberate system — purpose-architected,
             performance-obsessed, and built to endure.
           </p>
         </div>
 
-        {/* Cards grid */}
         <div
           ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -417,7 +447,6 @@ function Projects() {
               key={p.title}
               className={`project-card opacity-0 group relative rounded-2xl border ${p.border} bg-white/[0.03] backdrop-blur-sm p-6 cursor-pointer hover:scale-[1.02] hover:-translate-y-1 hover:shadow-2xl ${p.glow} transition-all duration-400`}
             >
-              {/* Gradient overlay on hover */}
               <div
                 className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${p.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none`}
               />
@@ -442,12 +471,12 @@ function Projects() {
                     </span>
                   ))}
                 </div>
-                <div className="mt-6 flex gap-3">
+                <div className="mt-6 flex flex-wrap gap-3">
                   {p.github && (
                     <a
                       href={p.github}
                       target="_blank"
-                      className="px-4 py-2 rounded-full text-xs border border-white/10 text-white/60 hover:text-white hover:border-purple-400/50 transition"
+                      className="flex-1 text-center px-4 py-2 rounded-full text-xs border border-white/10 text-white/60 hover:text-white hover:border-purple-400/50 transition"
                     >
                       GitHub
                     </a>
@@ -457,7 +486,7 @@ function Projects() {
                     <a
                       href={p.demo}
                       target="_blank"
-                      className="px-4 py-2 rounded-full text-xs bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:scale-105 transition"
+                      className="flex-1 text-center px-4 py-2 rounded-full text-xs bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:scale-105 transition"
                     >
                       Live Demo
                     </a>
@@ -501,18 +530,18 @@ function Stack() {
     <section
       ref={sectionRef}
       id="stack"
-      className="relative py-32 bg-[#080610]"
+      className="relative py-20 md:py-32 bg-[#080610]"
     >
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-purple-500/30 to-transparent" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 md:h-32 bg-gradient-to-b from-transparent via-purple-500/30 to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <p className="text-cyan-400/60 text-xs tracking-[0.35em] uppercase font-medium mb-3">
+        <div className="mb-12 md:mb-16">
+          <p className="text-cyan-400/60 text-[10px] md:text-xs tracking-[0.35em] uppercase font-medium mb-3">
             Technical Arsenal
           </p>
-          <h2 className="text-4xl font-black tracking-tighter text-white">
+          <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-white">
             The{" "}
             <span
               style={{
@@ -527,7 +556,10 @@ function Stack() {
           </h2>
         </div>
 
-        <div ref={contentRef} className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div
+          ref={contentRef}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-8"
+        >
           {STACK_ITEMS.map((col) => (
             <div key={col.category} className="stack-col opacity-0">
               <h4 className="text-white/30 text-[10px] tracking-[0.3em] uppercase font-semibold mb-5 pb-3 border-b border-white/5">
@@ -576,7 +608,7 @@ function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-32 bg-[#0b0813]"
+      className="relative py-20 md:py-32 bg-[#0b0813]"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-violet-600/10 rounded-full blur-[80px]" />
@@ -585,14 +617,13 @@ function About() {
       <div className="max-w-7xl mx-auto px-6">
         <div
           ref={contentRef}
-          className="opacity-0 grid md:grid-cols-2 gap-20 items-center"
+          className="opacity-0 grid md:grid-cols-2 gap-12 md:gap-20 items-center"
         >
-          {/* Left */}
           <div>
-            <p className="text-violet-400/70 text-xs tracking-[0.35em] uppercase font-medium mb-4">
+            <p className="text-violet-400/70 text-[10px] md:text-xs tracking-[0.35em] uppercase font-medium mb-4">
               About
             </p>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-white mb-8 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-white mb-6 md:mb-8 leading-tight">
               22 Years Old.
               <br />
               <span
@@ -607,7 +638,7 @@ function About() {
                 Infinite Ambition.
               </span>
             </h2>
-            <div className="space-y-5 text-white/50 text-base font-light leading-relaxed">
+            <div className="space-y-4 md:space-y-5 text-white/50 text-sm md:text-base font-light leading-relaxed">
               <p>
                 I'm{" "}
                 <strong className="text-white/80 font-medium">
@@ -639,8 +670,7 @@ function About() {
             </div>
           </div>
 
-          {/* Right — stat cards */}
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-2 gap-4 md:gap-5">
             {[
               { value: "22", label: "Years Old" },
               { value: "10+", label: "Live Projects Shipped" },
@@ -649,10 +679,10 @@ function About() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-white/8 bg-white/[0.03] p-6 text-center hover:border-purple-500/20 hover:bg-white/[0.05] transition-all duration-300"
+                className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 md:p-6 text-center hover:border-purple-500/20 hover:bg-white/[0.05] transition-all duration-300"
               >
                 <div
-                  className="text-4xl font-black mb-2"
+                  className="text-3xl md:text-4xl font-black mb-2"
                   style={{
                     background: "linear-gradient(135deg, #a78bfa, #67e8f9)",
                     WebkitBackgroundClip: "text",
@@ -662,7 +692,7 @@ function About() {
                 >
                   {stat.value}
                 </div>
-                <div className="text-white/40 text-xs tracking-wider uppercase font-medium">
+                <div className="text-white/40 text-[10px] md:text-xs tracking-wider uppercase font-medium">
                   {stat.label}
                 </div>
               </div>
@@ -676,16 +706,16 @@ function About() {
 
 function Contact() {
   return (
-    <section id="contact" className="relative py-32 bg-[#080610]">
+    <section id="contact" className="relative py-20 md:py-32 bg-[#080610]">
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="w-[500px] h-[500px] rounded-full bg-purple-600/8 blur-[120px]" />
+        <div className="w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-purple-600/8 blur-[90px] md:blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
-        <p className="text-purple-400/70 text-xs tracking-[0.35em] uppercase font-medium mb-4">
+        <p className="text-purple-400/70 text-[10px] md:text-xs tracking-[0.35em] uppercase font-medium mb-4">
           Let's Build Together
         </p>
-        <h2 className="text-5xl md:text-6xl font-black tracking-tighter text-white mb-6">
+        <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-6">
           Have a{" "}
           <span
             style={{
@@ -698,14 +728,14 @@ function Contact() {
             Vision?
           </span>
         </h2>
-        <p className="text-white/40 text-base font-light leading-relaxed mb-10 max-w-xl mx-auto">
+        <p className="text-white/40 text-sm md:text-base font-light leading-relaxed mb-8 md:mb-10 max-w-xl mx-auto">
           I'm selectively available for high-impact projects, technical
           consulting, and long-term engineering partnerships. If you're building
           something that matters — let's talk.
         </p>
         <a
           href="mailto:yousef@architect.dev"
-          className="group inline-flex items-center gap-3 px-10 py-4 rounded-full bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold tracking-widest uppercase text-sm shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.03] transition-all duration-300"
+          className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto px-10 py-4 rounded-full bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold tracking-widest uppercase text-xs md:text-sm shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.03] transition-all duration-300"
         >
           <span>Initiate Contact</span>
           <svg
@@ -730,17 +760,14 @@ function Contact() {
 function Footer() {
   return (
     <footer className="relative bg-[#06040f] border-t border-white/5 overflow-hidden">
-      {/* Neon ambient glows */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute bottom-0 left-1/4 w-80 h-40 bg-purple-600/12 rounded-full blur-[80px]" />
         <div className="absolute bottom-0 right-1/4 w-72 h-40 bg-cyan-600/10 rounded-full blur-[80px]" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16 pb-8">
-        {/* Top row */}
-        <div className="grid md:grid-cols-3 gap-12 mb-16">
-          {/* Brand */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-12 md:pt-16 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 mb-12 md:mb-16">
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
@@ -756,7 +783,6 @@ function Footer() {
             </p>
           </div>
 
-          {/* Core stacks */}
           <div>
             <h5 className="text-white/30 text-[10px] tracking-[0.3em] uppercase font-semibold mb-5">
               Core Technologies
@@ -781,21 +807,27 @@ function Footer() {
             </div>
           </div>
 
-          {/* Links */}
           <div>
             <h5 className="text-white/30 text-[10px] tracking-[0.3em] uppercase font-semibold mb-5">
               Find Me
             </h5>
             <div className="space-y-2.5">
               {[
-                { label: "GitHub", href: "https://github.com" },
-                { label: "LinkedIn", href: "https://linkedin.com" },
-                { label: "Twitter / X", href: "https://twitter.com" },
+                {
+                  label: "GitHub",
+                  href: "https://github.com/youseffahem1/protofoli",
+                },
+                {
+                  label: "LinkedIn",
+                  href: "https://www.linkedin.com/in/yousef-fahem-448528421/",
+                },
                 { label: "Email", href: "mailto:yousef@architect.dev" },
               ].map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2 text-white/30 hover:text-white/70 text-sm font-light transition-colors duration-200 group"
                 >
                   <span className="w-3 h-px bg-white/20 group-hover:w-5 group-hover:bg-purple-400/60 transition-all duration-300" />
@@ -806,16 +838,14 @@ function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-gradient-to-r from-transparent via-white/8 to-transparent mb-8" />
 
-        {/* Bottom row */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/20 text-xs font-light tracking-wide">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-4 text-center md:text-left">
+          <p className="text-white/20 text-[10px] md:text-xs font-light tracking-wide">
             © {new Date().getFullYear()} Yousef Fahem Al-Hayafi — All Rights
             Reserved
           </p>
-          <p className="text-white/15 text-xs font-light tracking-wider">
+          <p className="text-white/15 text-[10px] md:text-xs font-light tracking-wider">
             Architected with <span className="text-purple-400/50">Next.js</span>{" "}
             · <span className="text-cyan-400/50">FastAPI</span> ·{" "}
             <span className="text-violet-400/50">PostgreSQL</span>
