@@ -48,6 +48,26 @@ const PROJECTS: {
     github: "https://github.com/youseffahem1/Glass-Login-Vibe-Aplle-Spotfy",
     demo: "https://glass-login-vibe-aplle-spotfy.vercel.app/",
   },
+  {
+    tag: "FRONT-END UI PROJECT",
+    title: "sony-wh1000xm-experience",
+    description:
+      "A sleek, modern glassmorphism login interface. Designed with beautiful gradients, smooth transitions, and a clean user experience.",
+    stack: [
+      "React",
+      "Glassmorphism",
+      "UI/UX",
+      "Tailwind CSS",
+      "next.js",
+      "TypeScript",
+      "GSAP",
+    ],
+    accent: "from-purple-500/20 to-pink-500/10",
+    border: "border-purple-500/20",
+    glow: "group-hover:shadow-purple-500/20",
+    github: "https://github.com/youseffahem1/sony-wh1000xm-experience",
+    demo: "https://sony-wh1000xm-experience.vercel.app/",
+  },
 ];
 
 const STACK_ITEMS = [
