@@ -62,7 +62,7 @@ const PROJECTS: {
       "TypeScript",
       "GSAP",
     ],
-    accent: "from-purple-500/20 to-pink-500/10",
+    accent: "from-purple-100/20 to-pink-900/10",
     border: "border-purple-500/20",
     glow: "group-hover:shadow-purple-500/20",
     github: "https://github.com/youseffahem1/sony-wh1000xm-experience",
