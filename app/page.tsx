@@ -43,8 +43,8 @@ const PROJECTS: {
       "A sleek, modern glassmorphism login interface. Designed with beautiful gradients, smooth transitions, and a clean user experience.",
     stack: ["React", "Glassmorphism", "UI/UX"],
     accent: "from-purple-500/20 to-pink-500/10",
-    border: "border-purple-500/20",
-    glow: "group-hover:shadow-purple-500/20",
+    border: "border-purple-100/20",
+    glow: "group-hover:shadow-purple-300/20",
     github: "https://github.com/youseffahem1/Glass-Login-Vibe-Aplle-Spotfy",
     demo: "https://glass-login-vibe-aplle-spotfy.vercel.app/",
   },
@@ -52,7 +52,7 @@ const PROJECTS: {
     tag: "FRONT-END UI PROJECT",
     title: "sony-wh1000xm-experience",
     description:
-      "A sleek, modern glassmorphism login interface. Designed with beautiful gradients, smooth transitions, and a clean user experience.",
+      "Premium Sony Headphones Landing Page with cinematic animations and modern luxury UI.",
     stack: [
       "React",
       "Glassmorphism",
@@ -63,7 +63,7 @@ const PROJECTS: {
       "GSAP",
     ],
     accent: "from-purple-100/20 to-pink-900/10",
-    border: "border-purple-500/20",
+    border: "border-purple-800/20",
     glow: "group-hover:shadow-purple-500/20",
     github: "https://github.com/youseffahem1/sony-wh1000xm-experience",
     demo: "https://sony-wh1000xm-experience.vercel.app/",
