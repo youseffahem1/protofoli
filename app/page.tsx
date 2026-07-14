@@ -38,6 +38,18 @@ const PROJECTS: {
   },
   {
     tag: "FRONT-END UI PROJECT",
+    title: "Premium interior design website with smooth animations",
+    description:
+      "Luxury interior design showcase website with fluid animations and modern UI/UX, crafted with Next.js and GSAP.",
+    stack: ["React", "Glassmorphism", "UI/UX", "next.js", "GSAP"],
+    accent: "from-purple-400/20 to-pink-400/10",
+    border: "border-purple-200/20",
+    glow: "group-hover:shadow-purple-300/20",
+    github: "https://github.com/youseffahem1/Modren-Site-Decor",
+    demo: "https://modren-site-decor.vercel.app/",
+  },
+  {
+    tag: "FRONT-END UI PROJECT",
     title: "Modern Glass Login",
     description:
       "A sleek, modern glassmorphism login interface. Designed with beautiful gradients, smooth transitions, and a clean user experience.",
@@ -48,6 +60,7 @@ const PROJECTS: {
     github: "https://github.com/youseffahem1/Glass-Login-Vibe-Aplle-Spotfy",
     demo: "https://glass-login-vibe-aplle-spotfy.vercel.app/",
   },
+
   {
     tag: "FRONT-END UI PROJECT",
     title: "sony-wh1000xm-experience",
